@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<title>Калькулятор</title>
+	<style>
+	@media only screen and (max-width: 660px) {
+		*{
+			margin:0;
+		}
+		#calcbody{
+			margin: 0 auto;
+			width: 300px;
+			padding: 10px;
+			background-color: rgb(50,49,47);
+			color: rgb(255,255,255);
+			font-family: Helvetica, Verdana, sans-serif;
+			font-size: 18px;
+		}
+		.calcheader{
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			flex-direction: column;
+			/*flex-wrap: wrap;*/
+			color: rgb(153,152,151);
+			padding-top: 10px;
+		}
+		.calcheader2{
+			display: flex;
+			justify-content: space-between;
+			/*flex-wrap: wrap;*/
+			color: rgb(153,152,151);
+			padding-top: 10px;
+		}
+		.selected{
+			color: rgb(255,255,255);
+			padding: 10px;
+			border-radius: 10px;
+			background-color: rgb(208,163,115);
+			margin-top: -10px;
+			font-size: 19px;
+		}
+		#c1,#c2,#c3,#c4{
+			padding: 10px;
+		}
+
+		/*input range css*/
+			input[type=range] {
+			  -webkit-appearance: none;
+			  --range: calc(var(--max) - var(--min));
+	  		  --ratio: calc((var(--val) - var(--min))/var(--range));
+	  		  --sx: calc(.5*1.5em + var(--ratio)*(100% - 1.5em));
+			  width: 100%;
+			  margin: 5px 0;
+			}
+			
+			input[type=range]:focus {
+			  outline: none;
+			}
+			input[type=range]::-webkit-slider-runnable-track {
+			  width: 100%;
+			  height: 2px;
+			  cursor: pointer;
+			  /*box-shadow: 1px 1px 1px rgba(0, 0, 0, 0), 0px 0px 1px rgba(13, 13, 13, 0);*/
+			  background: rgb(153,152,151);
+			  border-radius: 25px;
+			  /*border: 0px solid rgba(0, 1, 1, 0);*/
+			}
+			.js [type='range']::-webkit-slider-runnable-track {
+			  background: linear-gradient(rgb(208,163,115), rgb(208,163,115)) 0/var(--sx) 100% no-repeat #ccc;
+			}
+			input[type=range]::-webkit-slider-thumb {
+			  /*box-shadow: -80px 0 0 80px green;*/
+			  /*border: 2px solid #000000;*/
+			  height: 15px;
+			  width: 15px;
+			  border-radius: 50px;
+			  background: rgb(208,163,115);
+			  cursor: pointer;
+			  -webkit-appearance: none;
+			  margin-top: -6px;
+			}
+			
+			input[type="range"]::-moz-range-progress {
+			  background-color: rgb(208,163,115); 
+			}
+			input[type=range]::-moz-range-track {
+			  width: 100%;
+			  height: 2px;
+			  cursor: pointer;
+			  /*box-shadow: 1px 1px 1px rgba(0, 0, 0, 0), 0px 0px 1px rgba(13, 13, 13, 0);*/
+			  background-color: rgb(153,152,151);
+			  border-radius: 25px;
+			  /*border: 0px solid rgba(0, 1, 1, 0);*/
+			}
+			input[type=range]::-moz-range-thumb {
+			  /*box-shadow: 0px 0px 0px rgba(0, 0, 0, 0), 0px 0px 0px rgba(13, 13, 13, 0);*/
+			  /*border: 1.4px solid #000000;*/
+			  height: 15px;
+			  width: 15px;
+			  border-radius: 50px;
+			  background: rgb(208,163,115);
+			  cursor: pointer;
+			}
+			input[type=range]::-ms-track {
+			  width: 100%;
+			  height: 2px;
+			  cursor: pointer;
+			  background: transparent;
+			  border-color: transparent;
+			  color: transparent;
+			}
+			input[type=range]::-ms-fill-lower {
+			  background-color: rgb(208,163,115); 
+			  /*border: 0px solid rgba(0, 1, 1, 0);*/
+			  border-radius: 50px;
+			  /*box-shadow: 1px 1px 1px rgba(0, 0, 0, 0), 0px 0px 1px rgba(13, 13, 13, 0);*/
+			}
+			input[type=range]::-ms-fill-upper {
+			  background-color: rgb(153,152,151);
+			  /*border: 0px solid rgba(0, 1, 1, 0);*/
+			  border-radius: 50px;
+			  /*box-shadow: 1px 1px 1px rgba(0, 0, 0, 0), 0px 0px 1px rgba(13, 13, 13, 0);*/
+			}
+			input[type=range]::-ms-thumb {
+			  /*box-shadow: 0px 0px 0px rgba(0, 0, 0, 0), 0px 0px 0px rgba(13, 13, 13, 0);*/
+			  /*border: 1.4px solid #000000;*/
+			  height: 15px;
+			  width: 15px;
+			  border-radius: 50px;
+			  background: rgb(208,163,115);
+			  cursor: pointer;
+			  height: 2px;
+			}
+			.wrap {
+			  display: flex;
+			  align-items: center;
+			  position: relative;
+			  width: 100%;
+			  height: 3em;
+			  font: 0.8em/1 arial, sans-serif;
+			}
+			[type='range']::-ms-tooltip {
+			  display: none;
+			}
+			[type='range'] ~ output {
+			  display: none;
+			}
+			.js [type='range'] ~ output {
+			  display: block;
+			  position: absolute;
+			  left: 1em;
+			  top: 0;
+			  border-radius: 3px;
+			  transform: translate(calc((var(--val) - var(--min))/(var(--max) - var(--min))*20em - 49%));
+			}
+	}
+	@media only screen and (min-width: 660px) {
+		*{
+			margin:0;
+		}
+		#calcbody{
+			margin: 0 auto;
+			width: 600px;
+			padding: 30px;
+			background-color: rgb(50,49,47);
+			color: rgb(255,255,255);
+			font-family: Helvetica, Verdana, sans-serif;
+			font-size: 18px;
+		}
+		.calcheader{
+			display: flex;
+			justify-content: space-between;
+			color: rgb(153,152,151);
+			padding-top: 10px;
+		}
+		.calcheader2{
+			display: flex;
+			justify-content: space-between;
+			color: rgb(153,152,151);
+			padding-top: 10px;
+		}
+		.selected{
+			color: rgb(255,255,255);
+			padding: 10px;
+			border-radius: 10px;
+			background-color: rgb(208,163,115);
+			margin-top: -10px;
+			font-size: 19px;
+		}
+
+		/*input range css*/
+			input[type=range] {
+			  -webkit-appearance: none;
+			  --range: calc(var(--max) - var(--min));
+	  		  --ratio: calc((var(--val) - var(--min))/var(--range));
+	  		  --sx: calc(.5*1.5em + var(--ratio)*(100% - 1.5em));
+			  width: 100%;
+			  margin: 5px 0;
+			  background-color: rgb(50,49,47);
+			}
+			
+			input[type=range]:focus {
+			  outline: none;
+			}
+			input[type=range]::-webkit-slider-runnable-track {
+			  width: 100%;
+			  height: 2px;
+			  cursor: pointer;
+			  /*box-shadow: 1px 1px 1px rgba(0, 0, 0, 0), 0px 0px 1px rgba(13, 13, 13, 0);*/
+			  background: rgb(153,152,151);
+			  border-radius: 25px;
+			  /*border: 0px solid rgba(0, 1, 1, 0);*/
+			}
+			.js [type='range']::-webkit-slider-runnable-track {
+			  background: linear-gradient(rgb(208,163,115), rgb(208,163,115)) 0/var(--sx) 100% no-repeat #ccc;
+			}
+			input[type=range]::-webkit-slider-thumb {
+			  /*box-shadow: -80px 0 0 80px green;*/
+			  /*border: 2px solid #000000;*/
+			  height: 15px;
+			  width: 15px;
+			  border-radius: 50px;
+			  background: rgb(208,163,115);
+			  cursor: pointer;
+			  -webkit-appearance: none;
+			  margin-top: -6px;
+			}
+			
+			input[type="range"]::-moz-range-progress {
+			  background-color: rgb(208,163,115); 
+			}
+			input[type=range]::-moz-range-track {
+			  width: 100%;
+			  height: 2px;
+			  cursor: pointer;
+			  /*box-shadow: 1px 1px 1px rgba(0, 0, 0, 0), 0px 0px 1px rgba(13, 13, 13, 0);*/
+			  background-color: rgb(153,152,151);
+			  border-radius: 25px;
+			  /*border: 0px solid rgba(0, 1, 1, 0);*/
+			}
+			input[type=range]::-moz-range-thumb {
+			  /*box-shadow: 0px 0px 0px rgba(0, 0, 0, 0), 0px 0px 0px rgba(13, 13, 13, 0);*/
+			  /*border: 1.4px solid #000000;*/
+			  height: 15px;
+			  width: 15px;
+			  border-radius: 50px;
+			  background: rgb(208,163,115);
+			  cursor: pointer;
+			}
+			input[type=range]::-ms-track {
+			  width: 100%;
+			  height: 2px;
+			  cursor: pointer;
+			  background: transparent;
+			  border-color: transparent;
+			  color: transparent;
+			}
+			input[type=range]::-ms-fill-lower {
+			  background-color: rgb(208,163,115); 
+			  /*border: 0px solid rgba(0, 1, 1, 0);*/
+			  border-radius: 50px;
+			  /*box-shadow: 1px 1px 1px rgba(0, 0, 0, 0), 0px 0px 1px rgba(13, 13, 13, 0);*/
+			}
+			input[type=range]::-ms-fill-upper {
+			  background-color: rgb(153,152,151);
+			  /*border: 0px solid rgba(0, 1, 1, 0);*/
+			  border-radius: 50px;
+			  /*box-shadow: 1px 1px 1px rgba(0, 0, 0, 0), 0px 0px 1px rgba(13, 13, 13, 0);*/
+			}
+			input[type=range]::-ms-thumb {
+			  /*box-shadow: 0px 0px 0px rgba(0, 0, 0, 0), 0px 0px 0px rgba(13, 13, 13, 0);*/
+			  /*border: 1.4px solid #000000;*/
+			  height: 15px;
+			  width: 15px;
+			  border-radius: 50px;
+			  background: rgb(208,163,115);
+			  cursor: pointer;
+			  height: 2px;
+			}
+			.wrap {
+			  display: flex;
+			  align-items: center;
+			  position: relative;
+			  width: 100%;
+			  height: 3em;
+			  font: 0.8em/1 arial, sans-serif;
+			}
+			[type='range']::-ms-tooltip {
+			  display: none;
+			}
+			[type='range'] ~ output {
+			  display: none;
+			}
+			.js [type='range'] ~ output {
+			  display: block;
+			  position: absolute;
+			  left: 1em;
+			  top: 0;
+			  border-radius: 3px;
+			  transform: translate(calc((var(--val) - var(--min))/(var(--max) - var(--min))*40em - 49%));
+			}
+	}		
+	</style>
+	<script>
+		var inp = $("[type='range']");
+	    document.documentElement.classList.add('js');
+	    inp.style.setProperty('--val', +inp.val());
+
+	    const _R = document.getElementById('range1'),
+		_W = _R.parentNode,
+		_O = _R.nextElementSibling;
+
+		document.documentElement.classList.add('js');
+	    _O.value = _R.value;
+	    _W.style.setProperty('--val', +_R.value);
+
+	    function numberWithSpaces(x) {
+	    	return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+		};
+	</script>
+	
+</head>
+<body>
+	<script>
+		$(function(){
+			 $('#result').html(numberWithSpaces(Math.round(($('#range1').val()*1+$('#range3').val()*1)*$('#stavka').html()/100/12)));
+		
+		})
+	</script>
+	<div id="calcbody">
+		<p class="calcheader">
+			<span class="selected" id="c1" onclick="
+				$('#pensionny').hide();
+				$('#sberegatelny').show();
+				$('#comfortplus').hide();
+				$('#c3').removeClass('selected');
+				$('#c1').addClass('selected');
+				$('#c2').removeClass('selected');
+				$('#c4').removeClass('selected');
+				$('#comfort').hide();
+				$('#stavka').text(13.5);
+				$('#result').html(numberWithSpaces(Math.round(($('#range4').val()*1+$('#range6').val()*1)*$('#stavka').html()/100/12)));
+			" style="cursor: pointer; ">Сберегательный</span>
+			<span id="c2" onclick="
+				$('#pensionny').show();
+				$('#sberegatelny').hide();
+				$('#comfortplus').hide();
+				$('#c3').removeClass('selected');
+				$('#c1').removeClass('selected');
+				$('#c2').addClass('selected');
+				$('#c4').removeClass('selected');
+				$('#comfort').hide(); 
+				$('#stavka').text(12);
+				$('#result').html(numberWithSpaces(Math.round(($('#range1').val()*1+$('#range3').val()*1)*$('#stavka').html()/100/12)));
+			" style="cursor: pointer;">Пенсионный</span>
+			<span id="c3" onclick="
+				$('#pensionny').hide();
+				$('#sberegatelny').hide();
+				$('#comfortplus').show();
+				$('#c3').addClass('selected');
+				$('#c1').removeClass('selected');
+				$('#c2').removeClass('selected');
+				$('#c4').removeClass('selected');
+				$('#comfort').hide();
+				$('#stavka').text(13.5);
+				$('#result').html(numberWithSpaces(Math.round(($('#range7').val()*1+$('#range9').val()*1)*$('#stavka').html()/100/12)));
+			" style="cursor: pointer;">Удобный Плюс</span>
+			<span id="c4" 
+			onclick="
+				$('#pensionny').hide();
+				$('#sberegatelny').hide();
+				$('#comfortplus').hide();
+				$('#c3').removeClass('selected');
+				$('#c1').removeClass('selected');
+				$('#c2').removeClass('selected');
+				$('#c4').addClass('selected');
+				$('#comfort').show();
+				$('#stavka').text(10);
+				$('#result').html(numberWithSpaces(Math.round(($('#range10').val()*1+$('#range12').val()*1)*$('#stavka').html()/100/12)));
+			" style="cursor: pointer;">Удобный</span>
+		</p>
+		
+		<div id="pensionny" style="display: none">
+			<div>
+				<p style="margin: 10px 0;text-align: left">Срок хранения</p>
+				<form>
+				   <div class="wrap" style="--min: 6;
+		                 --max: 24;
+		                 --val: 12;">
+					   <input type="range" id="range2" step="6" min="6" max="24" value="12" 
+					   	style="--min: 6; --max: 24;--val: 12;" 
+					   	oninput="
+						    var inp = document.querySelector('#range2');
+						    inp.style.setProperty('--val', +inp.value);
+						    var _R = document.getElementById('range2'), 
+						    _W = _R.parentNode, 
+						    _O = _R.nextElementSibling;
+							_O.value =_R.value + ' мес.';
+							_W.style.setProperty('--val', +_R.value);
+
+							if($(this).val() == 6){
+								$('#stavka').text(11);
+							}else if($(this).val() > 6 && $(this).val() < 12){
+								$('#stavka').text(11);
+							}else if($(this).val() == 12){
+								$('#stavka').text(12);
+							}else if($(this).val() > 12 && $(this).val() < 24){
+								$('#stavka').text(12);
+							}else if($(this).val() == 24){
+								$('#stavka').text(13.5);
+							}
+
+							$('#result').html(numberWithSpaces(Math.round(($('#range1').val()*1+$('#range3').val()*1)*$('#stavka').html()/100/12)));
+					    " />
+					    <output for="range2" style="margin-top: -5px">12 мес.</output>
+					    
+					</div>
+				</form>
+			</div>
+
+			<div>
+				<p style="margin: 10px 0;text-align: left">Сумма депозита</p>
+				<form>
+						<div class="wrap" style="--min: 100000;
+				                 --max: 900000;
+				                 --val: 250000;">
+						   <input type="range" id="range1" min="100000" max="900000" value="250000" style="--min: 100000;
+						                         --max: 900000;
+						                         --val: 250000;" oninput="
+						    var inp = document.querySelector('#range1');
+						    inp.style.setProperty('--val', +inp.value);
+						    var _R = document.getElementById('range1'), _W = _R.parentNode, _O = _R.nextElementSibling;
+							  _O.value = numberWithSpaces(_R.value) + ' руб.';
+							  _W.style.setProperty('--val', +_R.value);
+							  $('#result').html(numberWithSpaces(Math.round(($('#range1').val()*1+$('#range3').val()*1)*$('#stavka').html()/100/12)));
+						    "/>
+						    <output for="range1" style="margin-top: -5px">250 000 руб.</output>
+						   
+						</div>
+				</form>
+			</div>
+
+			<div>
+				<p style="margin: 10px 0;text-align: left">Сумма пополнения</p>
+				<form>
+					<div class="wrap" style="--min: 1000;
+			                 --max: 90000;
+			                 --val: 20000;">
+					   <input type="range" id="range3" min="1000" max="90000" value="20000" style="--min: 1000;
+					                         --max: 90000;
+					                         --val: 20000;" oninput="
+					    var inp = document.querySelector('#range3');
+					    inp.style.setProperty('--val', +inp.value);
+					    var _R = document.getElementById('range3'), _W = _R.parentNode, _O = _R.nextElementSibling;
+						  _O.value = numberWithSpaces(_R.value) + ' руб.';
+						  _W.style.setProperty('--val', +_R.value);
+						 $('#result').html(numberWithSpaces(Math.round(($('#range1').val()*1+$('#range3').val()*1)*$('#stavka').html()/100/12)));
+					    " />
+					    <output for="range3" style="margin-top: -5px;">20 000 руб.</output>
+					   
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<div id="sberegatelny">
+			<div>
+				<p style="margin: 10px 0;text-align: left">Срок хранения</p>
+				<form>
+				   <div class="wrap" style="--min: 3;
+		                 --max: 18;
+		                 --val: 12;">
+					   <input type="range" step="3" id="range5" min="3" max="18" value="12" 
+					   	style="--min: 3; --max: 18;--val: 12;" 
+					   	oninput="
+						    var inp = document.querySelector('#range5');
+						    inp.style.setProperty('--val', +inp.value);
+						    var _R = document.getElementById('range5'), 
+						    _W = _R.parentNode, 
+						    _O = _R.nextElementSibling;
+							_O.value =_R.value + ' мес.';
+							_W.style.setProperty('--val', +_R.value);
+
+							if($(this).val() == 3){
+								$('#stavka').text(10);
+							}else if($(this).val() == 6){
+								$('#stavka').text(12.5);
+							}else if($(this).val() == 9){
+								$('#stavka').text(12.5);
+							}else if($(this).val() >= 12){
+								$('#stavka').text(13.5);
+							}
+
+							$('#result').html(numberWithSpaces(Math.round(($('#range4').val()*1+$('#range6').val()*1)*$('#stavka').html()/100/12)));
+					    " />
+					    <output for="range5" style="margin-top: -5px">12 мес.</output>
+					    
+					</div>
+				</form>
+			</div>
+
+			<div>
+				<p style="margin: 10px 0;text-align: left">Сумма депозита</p>
+				<form>
+						<div class="wrap" style="--min: 100000;
+				                 --max: 1000000;
+				                 --val: 250000;">
+						   <input type="range" id="range4" min="100000" max="1000000" value="250000" style="--min: 100000;
+						                         --max: 1000000;
+						                         --val: 250000;" oninput="
+						    var inp = document.querySelector('#range4');
+						    inp.style.setProperty('--val', +inp.value);
+						    var _R = document.getElementById('range4'), _W = _R.parentNode, _O = _R.nextElementSibling;
+							  _O.value = numberWithSpaces(_R.value) + ' руб.';
+							  _W.style.setProperty('--val', +_R.value);
+							  $('#result').html(numberWithSpaces(Math.round(($('#range4').val()*1+$('#range6').val()*1)*$('#stavka').html()/100/12)));
+						    "/>
+						    <output for="range4" style="margin-top: -5px">250 000 руб.</output>
+						   
+						</div>
+				</form>
+			</div>
+
+			<div>
+				<p style="margin: 10px 0;text-align: left">Сумма пополнения</p>
+				<form>
+					<div class="wrap" style="--min: 3000;
+			                 --max: 90000;
+			                 --val: 20000;">
+					   <input type="range" id="range6" min="3000" max="90000" value="20000" style="--min: 3000;
+					                         --max: 90000;
+					                         --val: 20000;" oninput="
+					    var inp = document.querySelector('#range6');
+					    inp.style.setProperty('--val', +inp.value);
+					    var _R = document.getElementById('range6'), _W = _R.parentNode, _O = _R.nextElementSibling;
+						  _O.value = numberWithSpaces(_R.value) + ' руб.';
+						  _W.style.setProperty('--val', +_R.value);
+						 $('#result').html(numberWithSpaces(Math.round(($('#range4').val()*1+$('#range6').val()*1)*$('#stavka').html()/100/12)));
+					    " />
+					    <output for="range6" style="margin-top: -5px;">20 000 руб.</output>
+					   
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<div id="comfortplus" style="display: none">
+			<div>
+				<p style="margin: 10px 0;text-align: left">Срок хранения</p>
+				<form>
+				   <div class="wrap" style="--min: 11;
+		                 --max: 13;
+		                 --val: 12;">
+					   <input type="range" disabled="true" id="range8" min="11" max="13" value="12" 
+					   	style="--min: 11; --max: 13;--val: 12;" 
+					   	oninput="
+						    var inp = document.querySelector('#range8');
+						    inp.style.setProperty('--val', +inp.value);
+						    var _R = document.getElementById('range8'), 
+						    _W = _R.parentNode, 
+						    _O = _R.nextElementSibling;
+							_O.value =_R.value + ' мес.';
+							_W.style.setProperty('--val', +_R.value);
+							$('#result').html(numberWithSpaces(Math.round(($('#range7').val()*1+$('#range9').val()*1)*$('#stavka').html()/100/12)));
+					    " />
+					    <output for="range8" style="margin-top: -5px">12 мес.</output>
+					    
+					</div>
+				</form>
+			</div>
+
+			<div>
+				<p style="margin: 10px 0;text-align: left">Сумма депозита</p>
+				<form>
+						<div class="wrap" style="--min: 200000;
+				                 --max: 1500000;
+				                 --val: 250000;">
+						   <input type="range" id="range7" min="200000" max="1500000" value="250000" style="--min: 200000;
+						                         --max: 1500000;
+						                         --val: 250000;" oninput="
+						    var inp = document.querySelector('#range7');
+						    inp.style.setProperty('--val', +inp.value);
+						    var _R = document.getElementById('range7'), _W = _R.parentNode, _O = _R.nextElementSibling;
+							  _O.value = numberWithSpaces(_R.value) + ' руб.';
+							  _W.style.setProperty('--val', +_R.value);
+							  $('#result').html(numberWithSpaces(Math.round(($('#range7').val()*1+$('#range9').val()*1)*$('#stavka').html()/100/12)));
+						    "/>
+						    <output for="range7" style="margin-top: -5px">250 000 руб.</output>
+						   
+						</div>
+				</form>
+			</div>
+
+			<div>
+				<p style="margin: 10px 0;text-align: left">Сумма пополнения</p>
+				<form>
+					<div class="wrap" style="--min: 10000;
+			                 --max: 90000;
+			                 --val: 20000;">
+					   <input type="range" id="range9" min="10000" max="90000" value="20000" style="--min: 10000;
+					                         --max: 90000;
+					                         --val: 20000;" oninput="
+					    var inp = document.querySelector('#range9');
+					    inp.style.setProperty('--val', +inp.value);
+					    var _R = document.getElementById('range9'), _W = _R.parentNode, _O = _R.nextElementSibling;
+						  _O.value = numberWithSpaces(_R.value) + ' руб.';
+						  _W.style.setProperty('--val', +_R.value);
+						 $('#result').html(numberWithSpaces(Math.round(($('#range7').val()*1+$('#range9').val()*1)*$('#stavka').html()/100/12)));
+					    " />
+					    <output for="range9" style="margin-top: -5px;">20 000 руб.</output>
+					   
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<div id="comfort" style="display: none">
+			<div>
+				<p style="margin: 10px 0;text-align: left">Срок хранения</p>
+				<form>
+				   <div class="wrap" style="--min: 3;
+		                 --max: 24;
+		                 --val: 12;">
+					   <input type="range" id="range11" min="3" max="24" value="12" 
+					   	style="--min: 3; --max: 24;--val: 12;" 
+					   	oninput="
+						    var inp = document.querySelector('#range11');
+						    inp.style.setProperty('--val', +inp.value);
+						    var _R = document.getElementById('range11'), 
+						    _W = _R.parentNode, 
+						    _O = _R.nextElementSibling;
+							_O.value =_R.value + ' мес.';
+							_W.style.setProperty('--val', +_R.value);
+							$('#result').html(numberWithSpaces(Math.round(($('#range10').val()*1+$('#range12').val()*1)*$('#stavka').html()/100/12)));
+					    " />
+					    <output for="range11" style="margin-top: -5px">12 мес.</output>
+					    
+					</div>
+				</form>
+			</div>
+
+			<div>
+				<p style="margin: 10px 0;text-align: left">Сумма депозита</p>
+				<form>
+						<div class="wrap" style="--min: 100000;
+				                 --max: 1500000;
+				                 --val: 250000;">
+						   <input type="range" id="range10" min="100000" max="1500000" value="250000" style="--min: 100000;
+						                         --max: 1500000;
+						                         --val: 250000;" oninput="
+						    var inp = document.querySelector('#range10');
+						    inp.style.setProperty('--val', +inp.value);
+						    var _R = document.getElementById('range10'), _W = _R.parentNode, _O = _R.nextElementSibling;
+							  _O.value = numberWithSpaces(_R.value) + ' руб.';
+							  _W.style.setProperty('--val', +_R.value);
+							  $('#result').html(numberWithSpaces(Math.round(($('#range10').val()*1+$('#range12').val()*1)*$('#stavka').html()/100/12)));
+						    "/>
+						    <output for="range10" style="margin-top: -5px">250 000 руб.</output>
+						   
+						</div>
+				</form>
+			</div>
+
+			<div>
+				<p style="margin: 10px 0;text-align: left">Сумма пополнения</p>
+				<form>
+					<div class="wrap" style="--min: 5000;
+			                 --max: 90000;
+			                 --val: 20000;">
+					   <input type="range" id="range12" min="5000" max="90000" value="20000" style="--min: 5000;
+					                         --max: 90000;
+					                         --val: 20000;" oninput="
+					    var inp = document.querySelector('#range12');
+					    inp.style.setProperty('--val', +inp.value);
+					    var _R = document.getElementById('range12'), _W = _R.parentNode, _O = _R.nextElementSibling;
+						  _O.value = numberWithSpaces(_R.value) + ' руб.';
+						  _W.style.setProperty('--val', +_R.value);
+						 $('#result').html(numberWithSpaces(Math.round(($('#range10').val()*1+$('#range12').val()*1)*$('#stavka').html()/100/12)));
+					    " />
+					    <output for="range12" style="margin-top: -5px;">20 000 руб.</output>
+					   
+					</div>
+				</form>
+			</div>
+		</div>
+		
+
+		<div class="calcheader2">
+			<div>
+				<p style="font-size:22px; color:rgb(255,255,255);margin-bottom: 0px;text-align: left"><span id='stavka'>13.5</span><span>%</span></p>
+				<p style="font-size: 16px;margin-top: 5px;text-align: left">годовых</p>
+			</div>
+			<div>
+				<p style="font-size:22px; color:rgb(255,255,255);margin-bottom: 0px;text-align: left"><span id="result"></span><span> руб.</span></p>
+				<p style="font-size: 16px;margin-top: 5px;text-align: left">Сумма ежемесячной<br>выплаты</p>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

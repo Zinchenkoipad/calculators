@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en,ru">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Калькулятор</title>
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script>
+     var inp = $("[type='range']");
+    document.documentElement.classList.add('js');
+    inp.style.setProperty('--val', +inp.val());
+
+    const _R = document.getElementById('range1'),
+	_W = _R.parentNode,
+	_O = _R.nextElementSibling;
+
+	document.documentElement.classList.add('js');
+
+	  _O.value = _R.value;
+	  _W.style.setProperty('--val', +_R.value);
+
+	function numberWithSpaces(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+	};
+	function comfort(){
+		$('#pensionny').hide();
+		$('#sberegatelny').hide();
+		$('#comfortplus').hide();
+		$('#comfort').show();
+		$('#c4').hide();
+		$('#c2').show();
+		$('#c3').show();
+		$('#c1').show();
+		$('#nameof').html('Удобный<div style="position:absolute;left: 0px;top: 30px;font-size:12px;width:400px">с возможностью частичного изъятия средств</div>'); 
+		// $('#choise').hide();
+		// $('#choose').show();
+		$('#result4').html(numberWithSpaces(Math.round(($('#range10').val()*1+$('#range12').val()*1)*input4.radio4.value))+' руб.');
+	}
+
+  </script>
+	<style>
+		body{
+			background-color: rgba(0,0,0,0.1);
+			font-family: Helvetica, Verdana, sans-serif;
+			color:rgba(0,0,0,0.8);
+		}
+		#main{
+			background-color: white;
+			width: 500px;
+			/*height: 550px;*/
+			padding: 19px;
+			padding-top: 15px;
+			margin: 0px auto;
+		}
+		.block{
+			-webkit-box-shadow: 0px 0px 5px 2px rgba(153,148,153,0.8);
+			-moz-box-shadow: 0px 0px 5px 2px rgba(153,148,153,0.8);
+			box-shadow: 0px 0px 5px 2px rgba(153,148,153,0.8);
+			padding: 5px 15px;
+			margin: 0 auto;
+			border-radius: 10px;
+		}
+		.flex{
+			display: flex; 
+			justify-content: space-between;
+			padding: 5px 15px;
+		}
+	/*radio button css;*/
+		.control {
+		    font-family: arial;
+		    display: inline;
+		    position: relative;
+		    padding-right: 40px;
+		    cursor: pointer;
+		    font-size: 13px;
+		}
+		.control input {
+	        position: absolute;
+	        z-index: -1;
+	        opacity: 0;
+	    }
+		.control_indicator {
+		    position: absolute;
+		    left: 0;
+		    height: 9px;
+		    width: 9px;
+		    background: #ffffff;
+		    border: 2px solid #000000;
+		    border-radius: 50%;
+		}
+		.control input:checked ~ .control_indicator {
+		    background: rgb(174,0,49);
+		}
+		.control input:checked:focus ~ .control_indicator {
+		    background: rgb(174,0,49);
+		}
+		.span1{
+			margin-left: -12px;
+		}
+		.span2{
+			position: absolute;
+			top:32px;
+			left:-4px;
+		}
+	/*input range css*/
+		input[type=range] {
+		  -webkit-appearance: none;
+		  --range: calc(var(--max) - var(--min));
+  		  --ratio: calc((var(--val) - var(--min))/var(--range));
+  		  --sx: calc(.5*1.5em + var(--ratio)*(100% - 1.5em));
+		  width: 260px;
+		  margin: 5px 0;
+		}
+		
+		input[type=range]:focus {
+		  outline: none;
+		}
+		input[type=range]::-webkit-slider-runnable-track {
+		  width: 100%;
+		  height: 2px;
+		  cursor: pointer;
+		  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0), 0px 0px 1px rgba(13, 13, 13, 0);
+		  background: grey;
+		  border-radius: 25px;
+		  border: 0px solid rgba(0, 1, 1, 0);
+		}
+		.js [type='range']::-webkit-slider-runnable-track {
+		  background: linear-gradient(rgb(174,0,49), rgb(174,0,49)) 0/var(--sx) 100% no-repeat #ccc;
+		}
+		input[type=range]::-webkit-slider-thumb {
+		  /*box-shadow: -80px 0 0 80px green;*/
+		  border: 2px solid #000000;
+		  height: 13px;
+		  width: 13px;
+		  border-radius: 50px;
+		  background: rgb(174,0,49);
+		  cursor: pointer;
+		  -webkit-appearance: none;
+		  margin-top: -5px;
+		}
+		
+		input[type="range"]::-moz-range-progress {
+		  background-color: rgb(174,0,49); 
+		}
+		input[type=range]::-moz-range-track {
+		  width: 260px;
+		  height: 2px;
+		  cursor: pointer;
+		  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0), 0px 0px 1px rgba(13, 13, 13, 0);
+		  background-color: grey;
+		  border-radius: 25px;
+		  border: 0px solid rgba(0, 1, 1, 0);
+		}
+		input[type=range]::-moz-range-thumb {
+		  box-shadow: 0px 0px 0px rgba(0, 0, 0, 0), 0px 0px 0px rgba(13, 13, 13, 0);
+		  border: 1.4px solid #000000;
+		  height: 12px;
+		  width: 12px;
+		  border-radius: 50px;
+		  background: rgb(174,0,49);
+		  cursor: pointer;
+		}
+		input[type=range]::-ms-track {
+		  width: 260px;
+		  height: 2px;
+		  cursor: pointer;
+		  background: transparent;
+		  border-color: transparent;
+		  color: transparent;
+		}
+		input[type=range]::-ms-fill-lower {
+		  background-color: rgb(174,0,49); 
+		  border: 0px solid rgba(0, 1, 1, 0);
+		  border-radius: 50px;
+		  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0), 0px 0px 1px rgba(13, 13, 13, 0);
+		}
+		input[type=range]::-ms-fill-upper {
+		  background-color: grey;
+		  border: 0px solid rgba(0, 1, 1, 0);
+		  border-radius: 50px;
+		  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0), 0px 0px 1px rgba(13, 13, 13, 0);
+		}
+		input[type=range]::-ms-thumb {
+		  box-shadow: 0px 0px 0px rgba(0, 0, 0, 0), 0px 0px 0px rgba(13, 13, 13, 0);
+		  border: 1.4px solid #000000;
+		  height: 12px;
+		  width: 12px;
+		  border-radius: 50px;
+		  background: #ae0031;
+		  cursor: pointer;
+		  height: 2px;
+		}
+		.wrap {
+		  display: flex;
+		  align-items: center;
+		  position: relative;
+		  width: 260px;
+		  height: 3em;
+		  font: 0.8em/1 arial, sans-serif;
+		}
+		[type='range']::-ms-tooltip {
+		  display: none;
+		}
+		[type='range'] ~ output {
+		  display: none;
+		}
+		.js [type='range'] ~ output {
+		  display: block;
+		  position: absolute;
+		  left: 1em;
+		  top: 0;
+		  padding: .25em .5em;
+		  border-radius: 3px;
+		  transform: translate(calc((var(--val) - var(--min))/(var(--max) - var(--min))*19em - 50%));
+		}
+	/*,*/
+		span{
+			font-size: 12px;
+		}
+
+	</style>
+</head>
+<body>
+	<div id="main">
+
+		<div class="flex" style="align-items: center;padding: 5px 0;position: relative;">
+			<p id="nameof" style="font-size: 22px;position: relative;">Пенсионный</p>
+			<p id="choose" style="display:none;font-weight: bold; color: rgb(174,0,49);cursor: pointer;" onclick="
+				$('#pensionny').hide();
+				$('#sberegatelny').hide();
+				$('#comfortplus').hide();
+				$('#comfort').hide();
+				$('#nameof').html('');
+				$('#choise').show();
+				$('#choose').hide();
+			">выбрать другой тип вклада</p>
+			<div id="choise" style="display: flex;justify-content: flex-end; text-align: center; font-weight: bold; color: rgb(174,0,49);font-size: 14px;cursor: pointer;">
+				<p id="c1" style="display: none; padding-left: 10px" onclick="
+						$('#pensionny').show();
+						$('#c1').hide();
+						$('#c2').show();
+						$('#c3').show();
+						$('#c4').show();
+						$('#sberegatelny').hide();
+						$('#comfortplus').hide();
+						$('#comfort').hide();
+						$('#nameof').html('Пенсионный');
+						// $('#choise').hide();
+						// $('#choose').show();
+						$('#result1').html(numberWithSpaces(Math.round(($('#range1').val()*1+$('#range3').val()*1)*input1.radio1.value))+' руб.');
+					">Пенсионный</p>
+				<p id="c2" style="padding-left: 10px" onclick="
+						$('#pensionny').hide();
+						$('#sberegatelny').show();
+						$('#c2').hide();
+						$('#c1').show();
+						$('#c3').show();
+						$('#c4').show();
+						$('#comfortplus').hide();
+						$('#comfort').hide();
+						$('#nameof').html('Сберегательный');
+						// $('#choise').hide();
+						// $('#choose').show();
+						$('#result2').html(numberWithSpaces(Math.round(($('#range4').val()*1+$('#range6').val()*1)*input2.radio2.value))+' руб.');
+					">Сберегательный</p>
+				<p id="c3" style="padding-left: 10px" onclick="
+						$('#pensionny').hide();
+						$('#sberegatelny').hide();
+						$('#comfortplus').show();
+						$('#c3').hide();
+						$('#c1').show();
+						$('#c2').show();
+						$('#c4').show();
+						$('#comfort').hide();
+						$('#nameof').html('Удобный Плюс');
+						// $('#choise').hide();
+						// $('#choose').show();
+						$('#result3').html(numberWithSpaces(Math.round(($('#range7').val()*1+$('#range9').val()*1)*input3.radio3.value))+' руб.');
+					">Удобный Плюс</p>
+				<p id="c4" style="padding-left: 10px" onclick="comfort()">Удобный</p>
+			</div>
+		</div>
+		
+	
+		<div id="pensionny">
+			<script>
+				$(function(){
+					 $('#result1').html(numberWithSpaces(Math.round(($('#range1').val()*1+$('#range3').val()*1)*input1.radio1.value))+' руб.');
+					$('input[type=radio][name=radio1]').change(function() {
+					    $('#result1').html(numberWithSpaces(Math.round(($('#range1').val()*1+$('#range3').val()*1)*input1.radio1.value))+' руб.');
+					});
+				})
+			</script>
+			<div class="block flex">
+				<p style="font-weight: 600;">Срок хранения</p>
+				<form name="input1" class="control-group" style="padding-right: 45px">
+				    <label class="control">
+				    	<span class="span1" style="margin-left: -10px;">6 мес.</span>
+				        <input type="radio" name="radio1" value="0.11"/>
+				        <div class="control_indicator"></div>
+				        <span class="span2">11%</span>
+				    </label>
+				    <label class="control">
+				        <span class="span1">12 мес.</span>
+				            <input type="radio" name="radio1" value="0.12" checked="checked" />
+				        <div class="control_indicator"></div>
+				        <span class="span2">12%</span>
+				    </label>
+				     <label class="control">
+				        <span class="span1">24 мес.</span>
+				            <input type="radio" name="radio1"  value="0.1395"/>
+				        <div class="control_indicator"></div>
+				       	<span class="span2" style="left:-13px">13,95%</span>
+				    </label>
+				</form>
+			</div>
+
+			<div>
+				<p class="flex" style="align-items: center;padding-right: 90px;font-size: 12px;color:rgba(0,0,0,0.7)">
+					<span>Размер членского взноса<br>при вступлении в программу</span>
+					<span id="in1" onclick=" $('#in1').css('color','rgb(174,0,49)');$('#in2').css('color','black'); " style="color: rgb(174,0,49)">50 рублей</span>
+					<span id="in2" onclick=" $('#in1').css('color','black');$('#in2').css('color','rgb(174,0,49)'); ">100 рублей</span>
+				</p>
+				<p class="flex" style="align-items: center;margin-top: -10px;padding-right: 200px;font-size: 12px;color:rgba(0,0,0,0.7)">
+					<span>Условия выплаты процентов</span>
+					<span style="color: rgb(174,0,49)">ежемесячно</span>
+				</p>
+			</div>
+
+			<div class="block flex" style="align-items: baseline;padding:3px 15px">
+				<p style="font-weight: bold;">Сумма депозита</p>
+				<form style="padding-top: 12px;padding-right: 20px">
+					<div class="wrap" style="--min: 100000;
+			                 --max: 900000;
+			                 --val: 250000;">
+					   <input type="range" id="range1" min="100000" max="900000" value="250000" style="--min: 100000;
+					                         --max: 900000;
+					                         --val: 250000;" oninput="
+					    var inp = document.querySelector('#range1');
+					    inp.style.setProperty('--val', +inp.value);
+					    var _R = document.getElementById('range1'), _W = _R.parentNode, _O = _R.nextElementSibling;
+						  _O.value = numberWithSpaces(_R.value) + ' руб.';
+						  _W.style.setProperty('--val', +_R.value);
+						  $('#result1').html(numberWithSpaces(Math.round(($('#range1').val()*1+$('#range3').val()*1)*input1.radio1.value))+' руб.');
+					    "/>
+					    <output for="range1" style="margin-top: -5px">250 000 руб.</output>
+					    <div style="font-size: 8px;position: absolute;left:-15px;bottom: 3px">100 000 руб.</div>
+					</div>
+				</form>
+			</div>
+
+			<div class="flex">
+				<p style="font-size: 12px;">Максимальная сумма привлекаемых сбережений не ограничена, при условии<br>соблюдения финансового норматива, установленного законодательсвом РФ.</p>
+			</div>
+
+			<div class="block" style="padding-top: 20px">
+				<div style="font-weight: bold">Пополнение счета</div>
+				<!-- <div class="flex" style="margin: -10px -15px 0 -15px">
+					<p style="font-weight: bold;font-size: 12px;">В какой месяц</p>
+					<form style="padding-top: 5px;padding-right: 20px">
+					   <div class="wrap" style="--min: 2;
+			                 --max: 9;
+			                 --val: 4;">
+					   <input type="range" id="range2" min="2" max="9" value="4" style="--min: 2;
+					                         --max: 9;
+					                         --val: 4;" oninput="
+					    var inp = document.querySelector('#range2');
+					    inp.style.setProperty('--val', +inp.value);
+					    var _R = document.getElementById('range2'), _W = _R.parentNode, _O = _R.nextElementSibling;
+						  _O.value = 'в ' + _R.value + '-й месяц';
+						  _W.style.setProperty('--val', +_R.value);
+					    "/>
+					    <output for="range2" style="margin-top: -5px">в 4-й месяц</output>
+					    <div style="font-size: 8px;position: absolute;left:-15px;bottom: 3px">2-й месяц</div>
+					    <div style="font-size: 8px;position: absolute;right:-15px;bottom: 3px">9-й месяц</div>
+
+					</div>
+					</form>
+				</div> -->
+				<div class="flex" style="margin: 8px -15px 12px -15px">
+					<p style="font-weight: bold;font-size: 12px;">Сумма пополнения</p>
+					<form style="padding-top: 5px;padding-right: 20px">
+						<div class="wrap" style="--min: 1000;
+			                 --max: 90000;
+			                 --val: 20000;">
+					   <input type="range" id="range3" min="1000" max="90000" value="20000" style="--min: 1000;
+					                         --max: 90000;
+					                         --val: 20000;" oninput="
+					    var inp = document.querySelector('#range3');
+					    inp.style.setProperty('--val', +inp.value);
+					    var _R = document.getElementById('range3'), _W = _R.parentNode, _O = _R.nextElementSibling;
+						  _O.value = numberWithSpaces(_R.value) + ' руб.';
+						  _W.style.setProperty('--val', +_R.value);
+						 $('#result1').html(numberWithSpaces(Math.round(($('#range1').val()*1+$('#range3').val()*1)*input1.radio1.value))+' руб.');
+					    " />
+					    <output for="range3" style="margin-top: -5px">20 000 руб.</output>
+					    <div style="font-size: 8px;position: absolute;left:-15px;bottom: 3px">1 000 руб.</div>
+					</div>
+					</form>
+				</div>
+			</div>
+
+			<div class="flex">
+				<p style="font-weight: bold">Сумма ежемесячной выплаты составит:</p>
+				<p id="result1" style="color:rgb(174,0,49)"></p>
+			</div>
+		</div>
+
+		<div id="sberegatelny" style="display: none">
+			<script>
+				$(function(){
+					$('input[type=radio][name=radio2]').change(function() {
+					    $('#result2').html(numberWithSpaces(Math.round(($('#range4').val()*1+$('#range6').val()*1)*input2.radio2.value))+' руб.');
+					});
+				})
+			</script>
+			<div class="block flex">
+				<p style="font-weight: 600;">Срок хранения</p>
+				<form name="input2" class="control-group" style="margin-right: -20px">
+				    <label class="control">
+				    	<span class="span1" style="margin-left: -10px;">3 мес.</span>
+				        <input type="radio" name="radio2" value="0.10"/>
+				        <div class="control_indicator"></div>
+				        <span class="span2">10%</span>
+				    </label>
+				    <label class="control">
+				        <span class="span1">6 мес.</span>
+				            <input type="radio" name="radio2" value="0.125" checked="checked" />
+				        <div class="control_indicator"></div>
+				        <span class="span2">12,5%</span>
+				    </label>
+				     <label class="control">
+				        <span class="span1">12 мес.</span>
+				            <input type="radio" name="radio2"  value="0.1395"/>
+				        <div class="control_indicator"></div>
+				       	<span class="span2" style="left:-13px">13,95%</span>
+				    </label>
+				     <label class="control">
+				        <span class="span1">18 мес.</span>
+				            <input type="radio" name="radio2"  value="0.1395"/>
+				        <div class="control_indicator"></div>
+				       	<span class="span2" style="left:-13px">13,95%</span>
+				    </label>
+				</form>
+			</div>
+
+			<div>
+				<p class="flex" style="align-items: center;padding-right: 90px;font-size: 12px;color:rgba(0,0,0,0.7)">
+					<span>Размер членского взноса<br>при вступлении в программу</span>
+					<span id="in3" onclick=" $('#in3').css('color','rgb(174,0,49)');$('#in4').css('color','black'); "style="color: rgb(174,0,49)">50 рублей</span>
+					<span id="in4" onclick=" $('#in4').css('color','rgb(174,0,49)');$('#in3').css('color','black'); ">100 рублей</span>
+				</p>
+				<p class="flex" style="align-items: center;margin-top: -10px;padding-right: 200px;font-size: 12px;color:rgba(0,0,0,0.7)">
+					<span>Условия выплаты процентов</span>
+					<span style="color: rgb(174,0,49)">ежемесячно</span>
+				</p>
+			</div>
+
+			<div class="block flex" style="align-items: baseline;padding:3px 15px">
+				<p style="font-weight: bold;">Сумма депозита</p>
+				<form style="padding-top: 12px;padding-right: 20px">
+					<div class="wrap" style="--min: 100000;
+	                         --max: 1000000;
+	                         --val: 250000;">
+					   <input type="range" id="range4" min="100000" max="1000000" value="250000" style="--min: 100000;
+					                         --max: 1000000;
+					                         --val: 250000;" oninput="
+					    var inp = document.querySelector('#range4');
+					    inp.style.setProperty('--val', +inp.value);
+					    var _R = document.getElementById('range4'), _W = _R.parentNode, _O = _R.nextElementSibling;
+						  _O.value = numberWithSpaces(_R.value) + ' руб.';
+						  _W.style.setProperty('--val', +_R.value);
+						  $('#result2').html(numberWithSpaces(Math.round(($('#range4').val()*1+$('#range6').val()*1)*input2.radio2.value))+' руб.');
+					    " />
+					    <output for="range4" style="margin-top: -5px">250 000 руб.</output>
+					    <div style="font-size: 8px;position: absolute;left:-15px;bottom: 3px">100 000 руб.</div>
+					    <div style="font-size: 8px;position: absolute;right:-15px;bottom: 3px">1 000 000 руб.</div>
+
+					</div>
+				</form>
+			</div>
+
+			<div class="flex">
+				<p style="font-size: 12px;">Максимальная сумма привлекаемых сбережений не ограничена, при условии<br>соблюдения финансового норматива, установленного законодательсвом РФ.</p>
+			</div>
+
+			<div class="block" style="padding-top: 20px;background-color: rgba(0,0,0,0.3);">
+				<div style="font-weight: bold">Пополнение счета</div>
+				<!-- <div class="flex" style="margin: -10px -15px 0 -15px">
+					<p style="font-weight: bold;font-size: 12px;">В какой месяц</p>
+					<form style="padding-top: 5px;padding-right: 20px">
+					   <div class="wrap" style="--min: 2;
+	                         --max: 9;
+	                         --val: 4;">
+					   <input type="range" id="range5" min="2" max="9" value="4" style="--min: 2;
+					                         --max: 9;
+					                         --val: 4;" oninput="
+					    var inp = document.querySelector('#range5');
+					    inp.style.setProperty('--val', +inp.value);
+					    var _R = document.getElementById('range5'), _W = _R.parentNode, _O = _R.nextElementSibling;
+						  _O.value = 'в ' + _R.value + '-й месяц';
+						  _W.style.setProperty('--val', +_R.value);
+					    "/>
+					    <output for="range5" style="margin-top: -5px">в 4-й месяц</output>
+					    <div style="font-size: 8px;position: absolute;left:-15px;bottom: 3px">2-й месяц</div>
+					    <div style="font-size: 8px;position: absolute;right:-15px;bottom: 3px">9-й месяц</div>
+
+					</div>
+					</form>
+				</div> -->
+				<div class="flex" style="margin: 8px -15px 12px -15px">
+					<p style="font-weight: bold;font-size: 12px;">Сумма пополнения</p>
+					<form style="padding-top: 5px;padding-right: 20px">
+						<div class="wrap" style="--min: 1000;
+	                         --max: 90000;
+	                         --val: 20000;">
+					   <input type="range" id="range6" min="1000" max="90000" value="20000" style="--min: 1000;
+					                         --max: 90000;
+					                         --val: 20000;" oninput="
+					    var inp = document.querySelector('#range6');
+					    inp.style.setProperty('--val', +inp.value);
+					    var _R = document.getElementById('range6'), _W = _R.parentNode, _O = _R.nextElementSibling;
+						  _O.value = numberWithSpaces(_R.value) + ' руб.';
+						  _W.style.setProperty('--val', +_R.value);
+						  $('#result2').html(numberWithSpaces(Math.round(($('#range4').val()*1+$('#range6').val()*1)*input2.radio2.value))+' руб.');
+					    "  />
+					    <output for="range6" style="margin-top: -5px">20 000 руб.</output>
+					    <div style="font-size: 8px;position: absolute;left:-15px;bottom: 3px">1 000 руб.</div>
+					</div>
+					</form>
+				</div>
+			</div>
+
+			<div class="flex">
+				<p style="font-weight: bold">Сумма ежемесячной выплаты составит:</p>
+				<p id="result2" style="color:rgb(174,0,49)">43 368 руб</p>
+			</div>
+		</div>
+
+		<div id="comfortplus" style="display: none">
+			<script>
+			$(function(){
+					$('input[type=radio][name=radio3]').change(function() {
+					    $('#result3').html(numberWithSpaces(Math.round(($('#range7').val()*1+$('#range9').val()*1)*input3.radio3.value))+' руб.');
+					});
+				})
+			</script>
+			<div class="block flex">
+				<p style="font-weight: 600;">Срок хранения</p>
+				<form name="input3" class="control-group" style="padding-right: 120px">
+				  
+				     <label class="control">
+				        <span class="span1">12 мес.</span>
+				            <input type="radio" name="radio3" checked="checked" value="0.1395"/>
+				        <div class="control_indicator"></div>
+				       	<span class="span2" style="left:-13px">13,95%</span>
+				    </label>
+				    
+				</form>
+			</div>
+
+			<div>
+				<p class="flex" style="align-items: center;padding-right: 90px;font-size: 12px;color:rgba(0,0,0,0.7)">
+					<span>Размер членского взноса<br>при вступлении в программу</span>
+					<span  id="in5" onclick=" $('#in5').css('color','rgb(174,0,49)');$('#in6').css('color','black'); "style="color: rgb(174,0,49)">100 рублей</span>
+					<span id="in6" onclick=" $('#in6').css('color','rgb(174,0,49)');$('#in5').css('color','black'); ">150 рублей</span>
+				</p>
+				<p class="flex" style="align-items: center;margin-top: -10px;padding-right: 200px;font-size: 12px;color:rgba(0,0,0,0.7)">
+					<span>Условия выплаты процентов</span>
+					<span style="color: rgb(174,0,49)">ежемесячно</span>
+				</p>
+			</div>
+
+			<div class="block flex" style="align-items: baseline;padding:3px 15px">
+				<p style="font-weight: bold;">Сумма депозита</p>
+				<form style="padding-top: 12px;padding-right: 20px">
+					<div class="wrap" style="--min: 200000;
+	                         --max: 1500000;
+	                         --val: 250000;">
+					   <input type="range" id="range7" min="200000" max="1500000" value="250000" style="--min: 200000;
+					                         --max: 1500000;
+					                         --val: 250000;" oninput="
+					    var inp = document.querySelector('#range7');
+					    inp.style.setProperty('--val', +inp.value);
+					    var _R = document.getElementById('range7'), _W = _R.parentNode, _O = _R.nextElementSibling;
+						  _O.value = numberWithSpaces(_R.value) + ' руб.';
+						  _W.style.setProperty('--val', +_R.value);
+						  $('#result3').html(numberWithSpaces(Math.round(($('#range7').val()*1+$('#range9').val()*1)*input3.radio3.value))+' руб.');
+					    " />
+					    <output for="range7" style="margin-top: -5px">250 000 руб.</output>
+					    <div style="font-size: 8px;position: absolute;left:-15px;bottom: 3px">200 000 руб.</div>
+					    <div style="font-size: 8px;position: absolute;right:-15px;bottom: 3px">1 500 000 руб.</div>
+
+					</div>
+				</form>
+			</div>
+
+			<div class="flex">
+				<p style="font-size: 12px;">Максимальная сумма привлекаемых сбережений не ограничена, при условии<br>соблюдения финансового норматива, установленного законодательсвом РФ.</p>
+			</div>
+
+			<div class="block" style="padding-top: 20px;">
+				<div style="font-weight: bold">Пополнение счета</div>
+				<!-- <div class="flex" style="margin: -10px -15px 0 -15px">
+					<p style="font-weight: bold;font-size: 12px;">В какой месяц</p>
+					<form style="padding-top: 5px;padding-right: 20px">
+					   <div class="wrap" style="--min: 2;
+	                         --max: 9;
+	                         --val: 4;">
+					   <input type="range" id="range8" min="2" max="9" value="4" style="--min: 2;
+					                         --max: 9;
+					                         --val: 4;" oninput="
+					    var inp = document.querySelector('#range8');
+					    inp.style.setProperty('--val', +inp.value);
+					    var _R = document.getElementById('range8'), _W = _R.parentNode, _O = _R.nextElementSibling;
+						  _O.value = 'в ' + _R.value + '-й месяц';
+						  _W.style.setProperty('--val', +_R.value);
+					    "/>
+					    <output for="range8" style="margin-top: -5px">в 4-й месяц</output>
+					    <div style="font-size: 8px;position: absolute;left:-15px;bottom: 3px">2-й месяц</div>
+					    <div style="font-size: 8px;position: absolute;right:-15px;bottom: 3px">9-й месяц</div>
+
+					</div>
+					</form>
+				</div> -->
+				<div class="flex" style="margin: 8px -15px 12px -15px">
+					<p style="font-weight: bold;font-size: 12px;">Сумма пополнения</p>
+					<form style="padding-top: 5px;padding-right: 20px">
+						<div class="wrap" style="--min: 10000;
+	                         --max: 90000;
+	                         --val: 20000;">
+					   <input type="range" id="range9" min="10000" max="90000" value="20000" style="--min: 10000;
+					                         --max: 90000;
+					                         --val: 20000;" oninput="
+					    var inp = document.querySelector('#range9');
+					    inp.style.setProperty('--val', +inp.value);
+					    var _R = document.getElementById('range9'), _W = _R.parentNode, _O = _R.nextElementSibling;
+						  _O.value = numberWithSpaces(_R.value) + ' руб.';
+						  _W.style.setProperty('--val', +_R.value);
+						  $('#result3').html(numberWithSpaces(Math.round(($('#range7').val()*1+$('#range9').val()*1)*input3.radio3.value))+' руб.');
+					    "  />
+					    <output for="range9" style="margin-top: -5px">20 000 руб.</output>
+					    <div style="font-size: 8px;position: absolute;left:-15px;bottom: 3px">10 000 руб.</div>
+					</div>
+					</form>
+				</div>
+			</div>
+
+			<div class="flex">
+				<p style="font-weight: bold">Сумма ежемесячной выплаты составит:</p>
+				<p id="result3" style="color:rgb(174,0,49)">43 368 руб</p>
+			</div>
+		</div>
+
+		<div id="comfort" style="display: none">
+			<script>
+			$(function(){
+					$('input[type=radio][name=radio4]').change(function() {
+					    $('#result4').html(numberWithSpaces(Math.round(($('#range10').val()*1+$('#range12').val()*1)*input4.radio4.value))+' руб.');
+					});
+				})
+			</script>
+			<div class="block flex">
+				<p style="font-weight: 600;">Срок хранения</p>
+				<form name="input4" class="control-group" style="padding-right: 150px">
+				  
+				     <label class="control" >
+				        <span class="span1" style="width:60px"></span>
+				            <input type="radio" name="radio4" checked="checked" value="0.10"/>
+				        <div class="control_indicator" style=""></div>
+				       	<span class="span2" style="left:-33px;top:16px">10%</span>
+				       	<span class="span2" style="left:30px;width:120px;top:16px">до востребования</span>
+				    </label>
+				    
+				</form>
+			</div>
+
+			<div>
+				<p class="flex" style="align-items: center;padding-right: 210px;font-size: 12px;color:rgba(0,0,0,0.7)">
+					<span>Размер членского взноса<br>при вступлении в программу</span>
+					<span style="color: rgb(174,0,49)">150 рублей</span>
+				</p>
+				<p class="flex" style="align-items: center;margin-top: -10px;padding-right: 90px;font-size: 12px;color:rgba(0,0,0,0.7)">
+					<span>Условия выплаты процентов</span>
+					<span style="color: rgb(174,0,49)">в момент возврата сбережений</span>
+				</p>
+			</div>
+
+			<div class="block flex" style="align-items: baseline;padding:3px 15px">
+				<p style="font-weight: bold;">Сумма депозита</p>
+				<form style="padding-top: 12px;padding-right: 20px">
+					<div class="wrap" style="--min: 100000;
+	                         --max: 1500000;
+	                         --val: 250000;">
+					   <input type="range" id="range10" min="100000" max="1500000" value="250000" style="--min: 100000;
+					                         --max: 1500000;
+					                         --val: 250000;" oninput="
+					    var inp = document.querySelector('#range10');
+					    inp.style.setProperty('--val', +inp.value);
+					    var _R = document.getElementById('range10'), _W = _R.parentNode, _O = _R.nextElementSibling;
+						  _O.value = numberWithSpaces(_R.value) + ' руб.';
+						  _W.style.setProperty('--val', +_R.value);
+						  $('#result4').html(numberWithSpaces(Math.round(($('#range10').val()*1+$('#range12').val()*1)*input4.radio4.value))+' руб.');
+					    " />
+					    <output for="range10" style="margin-top: -5px">250 000 руб.</output>
+					    <div style="font-size: 8px;position: absolute;left:-15px;bottom: 3px">100 000 руб.</div>
+					    <div style="font-size: 8px;position: absolute;right:-15px;bottom: 3px">1 500 000 руб.</div>
+
+					</div>
+				</form>
+			</div>
+
+			<div class="flex" style="height: 15px">
+				
+			</div>
+
+			<div class="block" style="padding-top: 20px;">
+				<div style="font-weight: bold">Пополнение счета</div>
+				<!-- <div class="flex" style="margin: -10px -15px 0 -15px">
+					<p style="font-weight: bold;font-size: 12px;">В какой месяц</p>
+					<form style="padding-top: 5px;padding-right: 20px">
+					   <div class="wrap" style="--min: 2;
+	                         --max: 9;
+	                         --val: 4;">
+					   <input type="range" id="range11" min="2" max="9" value="4" style="--min: 2;
+					                         --max: 9;
+					                         --val: 4;" oninput="
+					    var inp = document.querySelector('#range11');
+					    inp.style.setProperty('--val', +inp.value);
+					    var _R = document.getElementById('range11'), _W = _R.parentNode, _O = _R.nextElementSibling;
+						  _O.value = 'в ' + _R.value + '-й месяц';
+						  _W.style.setProperty('--val', +_R.value);
+					    "/>
+					    <output for="range11" style="margin-top: -5px">в 4-й месяц</output>
+					    
+
+					</div>
+					</form>
+				</div> -->
+				<div class="flex" style="margin: 8px -15px 12px -15px">
+					<p style="font-weight: bold;font-size: 12px;">Сумма пополнения</p>
+					<form style="padding-top: 5px;padding-right: 20px">
+						<div class="wrap" style="--min: 10000;
+	                         --max: 90000;
+	                         --val: 20000;">
+					   <input type="range" id="range12" min="5000" max="90000" value="20000" style="--min: 5000;
+					                         --max: 90000;
+					                         --val: 20000;" oninput="
+					    var inp = document.querySelector('#range12');
+					    inp.style.setProperty('--val', +inp.value);
+					    var _R = document.getElementById('range12'), _W = _R.parentNode, _O = _R.nextElementSibling;
+						  _O.value = numberWithSpaces(_R.value) + ' руб.';
+						  _W.style.setProperty('--val', +_R.value);
+						  $('#result4').html(numberWithSpaces(Math.round(($('#range10').val()*1+$('#range12').val()*1)*input4.radio4.value))+' руб.');
+					    " />
+					    <output for="range12" style="margin-top: -5px">20 000 руб.</output>
+					    <div style="font-size: 8px;position: absolute;left:-15px;bottom: 3px">5 000 руб.</div>
+					</div>
+					</form>
+				</div>
+			</div>
+
+			<div class="flex">
+				<p style="font-weight: bold">Сумма ежемесячной выплаты составит:</p>
+				<p id="result4" style="color:rgb(174,0,49)">43 368 руб</p>
+			</div>
+		</div>
+
+	</div>
+</body>
+</html>
